@@ -1,0 +1,13 @@
+# L={w  {0,1}* | se w é binário múltiplos de 3, gravar # no final de w}
+# Configuração inicial
+Fita:011
+Estado_Inicial:q0
+Estado_Final:qf
+
+# Instrucoes
+q0,0,q0,0,>
+q0,1,q1,1,>
+q1,0,q2,0,>
+q1,1,q0,1,>
+q2,1,q2,1,>
+q0,_,qf,#,_

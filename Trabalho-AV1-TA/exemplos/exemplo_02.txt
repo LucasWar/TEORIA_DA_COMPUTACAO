@@ -1,0 +1,13 @@
+# L ={ w  {0,1}* | w é binário e será incrementado em 1}
+# Configuração inicial
+Fita:
+Estado_Inicial:q0
+Estado_Final:q2
+
+# Instrucoes
+q0,0,q0,0,>
+q0,1,q0,1,>
+q0,_,q1,_,<
+q1,1,q1,0,<
+q1,0,q2,1,>
+q1,_,q2,1,>
