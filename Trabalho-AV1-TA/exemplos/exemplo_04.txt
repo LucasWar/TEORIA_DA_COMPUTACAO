@@ -1,6 +1,6 @@
-# Nome: Máquina de Turing: Adiciona X e Y na palavra
+# Nome: Soma de binarios
 # Configuração inicial
-Fita:10
+Fita:10+10
 Estado_Inicial:q0
 Estado_Final:qf
 

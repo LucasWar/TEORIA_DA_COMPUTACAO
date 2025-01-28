@@ -1,6 +1,6 @@
 # L ={ w  {0,1}* | w é binário e será incrementado em 1}
 # Configuração inicial
-Fita:
+Fita:100011
 Estado_Inicial:q0
 Estado_Final:q2
 

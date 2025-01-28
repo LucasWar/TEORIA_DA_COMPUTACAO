@@ -1,6 +1,6 @@
 # L = {w ∈ {0,1} | w tem quantidade par de zeros}
 # Configuração inicial
-Fita:01110111
+Fita:0111011100100
 Estado_Inicial:qp
 Estado_Final:qf
 
@@ -9,4 +9,4 @@ qp,0,qi,0,>
 qp,1,qp,1,>
 qi,0,qp,0,>
 qi,1,qi,1,>
-qp,_,qf,_,>
+qp,_,qf,_,_

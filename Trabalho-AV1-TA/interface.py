@@ -1,7 +1,7 @@
 from State import State
 from Transition import Transition
 from Edge import Edge
-from AFD import AFD
+from MT import MT
 import re 
 import tkinter as tk
 from tkinter import filedialog
@@ -66,8 +66,8 @@ class Interface:
                         valorLido, proximoEstado, gravaNaFita, movimento = transicao[1:]
                         estados[chave].addTransition(estados[proximoEstado], valorLido, gravaNaFita, movimento)
 
-            # Criar o objeto AFD
-            self.mt = AFD(estados[estadoInicial], self.fita, 20)
+            # Criar o objeto MT
+            self.mt = MT(estados[estadoInicial], self.fita, 20)
             self.tape = list(self.mt.fita)  # Atualiza a fita da interface
             self.fita = self.tape.copy()
             self.posMarcador = self.mt.current  # Atualiza o marcador
@@ -92,8 +92,8 @@ class Interface:
         # Atualizar a interface
         self.desenharFita()
 
-    def resetAFD(self):
-        """Reseta o AFD e a interface para o estado inicial."""
+    def resetMT(self):
+        """Reseta o MT e a interface para o estado inicial."""
         # Redefinir a fita e o marcador
         self.limparInterface()
 
@@ -102,10 +102,10 @@ class Interface:
         self.button_stop.config(state='disabled')
         self.button_reset.config(state='disabled')
 
-    def stopAFD(self):
+    def stopMT(self):
         self.stopStatus = True
         self.button_stop.config(state='disabled')
-    def runAFD(self):
+    def runMT(self):
         self.button_stop.config(state='normal')
         self.button_start.config(state='disabled')
         
@@ -153,6 +153,7 @@ class Interface:
         # Se as células já existirem, apenas atualize seus valores
         if self.cells:
             for i, cell in enumerate(self.cells):
+                cell.configure(state="normal")
                 indice_real = self.janela_inicio + i  # Índice real no self.tape
                 cell.delete(0, tk.END)
                 if indice_real < len(self.tape):
@@ -164,6 +165,7 @@ class Interface:
                     cell.config(highlightbackground="red", highlightcolor="red", highlightthickness=3)
                 else:
                     cell.config(highlightbackground="white", highlightcolor="white", highlightthickness=1)
+                cell.configure(state="readonly")  # Bloquear novamente
         else:
             # Criar as células apenas uma vez
             self.tape_frame = tk.Frame(self.root)
@@ -240,7 +242,7 @@ class Interface:
                          border=0,
                          state='disabled',
                          cursor='hand1',
-                         command=lambda: self.runAFD())
+                         command=lambda: self.runMT())
 
         # Usando lambda para alterar a cor ao passar o mouse
         self.button_start.pack(side=tk.LEFT, padx=5)
@@ -264,7 +266,7 @@ class Interface:
                        cursor='hand1',
                        state='disabled',
                        disabledforeground="gray",
-                       command=lambda: self.stopAFD()) # command=lambda: self.moverMarcador(1)"""
+                       command=lambda: self.stopMT()) # command=lambda: self.moverMarcador(1)"""
         
         self.button_stop.pack(side=tk.LEFT, padx=5)
         self.button_stop.bind("<Enter>", lambda event: self.button_stop.config(background='#f56c62', foreground='WHITE'))
@@ -273,7 +275,7 @@ class Interface:
         
 
 
-        self.button_reset = tk.Button(frameControles, text="🔄 \n RESET",height=2,width=9,font=('Arial',8,'bold'),command=lambda: self.resetAFD(),
+        self.button_reset = tk.Button(frameControles, text="🔄 \n RESET",height=2,width=9,font=('Arial',8,'bold'),command=lambda: self.resetMT(),
                                         background='#2574f5',  # Cor de fundo vermelha
                                         foreground='white',  # Cor da fonte branca
                                         activebackground='#0a1efa',  # Cor de fundo ativa, um tom de vermelho mais escuro

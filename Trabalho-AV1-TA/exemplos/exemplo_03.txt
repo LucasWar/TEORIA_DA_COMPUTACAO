@@ -1,6 +1,6 @@
 # L={w  {0,1}* | se w é binário múltiplos de 3, gravar # no final de w}
 # Configuração inicial
-Fita:011
+Fita:0111
 Estado_Inicial:q0
 Estado_Final:qf
 
