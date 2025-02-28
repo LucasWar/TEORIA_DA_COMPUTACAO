@@ -9,13 +9,15 @@ import time
 # Classe da interface
 class Interface:
     def __init__(self):
+        self.ribbon_size = 60
         self.root = tk.Tk()
         self.root.geometry("800x300")
         self.root.title("Simulador Machine Turing")
         self.root.config(background='white')
         self.root.resizable(False, False)
 
-        self.tape = list(range(30))  # Lista que representa toda a fita (valores de 0 a 24)
+        self.numPassos = 0
+        self.tape = list(range(self.ribbon_size))  # Lista que representa toda a fita (valores de 0 a 24)
         self.posMarcador = 0  # Posição inicial do marcador
         self.janela_inicio = 0  # Índice inicial da janela visível
         self.janela_tamanho = 20  # Quantidade de células visíveis
@@ -67,7 +69,7 @@ class Interface:
                         estados[chave].addTransition(estados[proximoEstado], valorLido, gravaNaFita, movimento)
 
             # Criar o objeto MT
-            self.mt = MT(estados[estadoInicial], self.fita, 20)
+            self.mt = MT(estados[estadoInicial], self.fita, self.ribbon_size)
             self.tape = list(self.mt.fita)  # Atualiza a fita da interface
             self.fita = self.tape.copy()
             self.posMarcador = self.mt.current  # Atualiza o marcador
@@ -106,6 +108,7 @@ class Interface:
         self.stopStatus = True
         self.button_stop.config(state='disabled')
     def runMT(self):
+        self.numPassos = 0
         self.button_stop.config(state='normal')
         self.button_start.config(state='disabled')
         
@@ -128,6 +131,8 @@ class Interface:
                 self.tape[self.posMarcador] = i
                 self.status2.config(text=f'Lendo: {self.tape[self.posMarcador]}')
                 self.status3.config(text=f'Escrevendo: {self.tape[self.posMarcador]}')
+            self.status4.config(text=f'Numero de passos: {self.numPassos}')
+            self.status5.config(text=f'Numero de 1s: {self.tape.count('1')}')
             self.referencia += 1
             self.desenharFita()  # Atualiza visualmente a fita
             self.root.update()  # Atualiza a interface gráfica
@@ -193,7 +198,7 @@ class Interface:
     def moverMarcador(self, direcao):
         """Move o marcador para a esquerda (-1) ou direita (+1)."""
         nova_pos = self.posMarcador + direcao
-
+        self.numPassos += 1
         # Garante que o marcador não ultrapasse os limites da fita
         if 0 <= nova_pos < len(self.tape):
             self.posMarcador = nova_pos
@@ -205,7 +210,7 @@ class Interface:
                 self.janela_inicio += 1
 
             self.desenharFita()
-
+        
     def centralizarMarcador(self):
         """Ajusta a janela para garantir que o marcador fique visível ao iniciar."""
         # Se o marcador estiver fora da janela inicial, reposiciona a janela
@@ -317,19 +322,29 @@ class Interface:
         
         # Inicializa a fita
         self.desenharFita()
-        self.frameRodaPe = tk.Frame(self.root,background='white')
-        self.frameRodaPe.pack(side=tk.BOTTOM,fill=tk.X)
+        self.frameRodaPe = tk.Frame(self.root, background='white')
+        self.frameRodaPe.pack(side=tk.BOTTOM, fill=tk.X)
         self.frameRodaPe.option_add("*Background", "white")
 
-        self.status = tk.Label(self.frameRodaPe,text="Status de aceitação: ")
-        self.status.pack(side=tk.LEFT,padx=50)
+        # Configurar as colunas para ter um espaçamento maior
+        self.frameRodaPe.columnconfigure(0, weight=1)
+        self.frameRodaPe.columnconfigure(1, weight=1)
+        self.frameRodaPe.columnconfigure(2, weight=1)
 
-        self.status2 = tk.Label(self.frameRodaPe,text="Lendo: ")
-        self.status2.pack(side=tk.LEFT,padx=50)
+        self.status = tk.Label(self.frameRodaPe, text="Status de aceitação: ")
+        self.status.grid(row=0, column=0, padx=50, pady=5, sticky="w")
 
-        self.status3 = tk.Label(self.frameRodaPe,text="Escrevendo: ")
-        self.status3.pack(side=tk.LEFT,padx=50)
-        # Inicia o loop principal da interface gráfica
+        self.status2 = tk.Label(self.frameRodaPe, text="Lendo: ")
+        self.status2.grid(row=0, column=1, padx=50, pady=5, sticky="w")
+
+        self.status3 = tk.Label(self.frameRodaPe, text="Escrevendo: ")
+        self.status3.grid(row=0, column=2, padx=50, pady=5, sticky="w")
+
+        self.status4 = tk.Label(self.frameRodaPe, text="Número de passos: ")
+        self.status4.grid(row=1, column=0, padx=50, pady=10, sticky="w")  
+
+        self.status5 = tk.Label(self.frameRodaPe, text="Número de 1s: ")
+        self.status5.grid(row=1, column=1, padx=50, pady=10, sticky="w")  
         self.root.mainloop()
 
 

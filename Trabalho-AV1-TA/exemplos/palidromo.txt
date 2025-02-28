@@ -1,0 +1,26 @@
+# Configuração inicial
+Fita:110011
+Estado_Inicial:q0
+Estado_Final:qf
+
+# Instrucoes
+q0,0,q1,_,>
+q0,1,q2,_,>
+q0,_,qf,_,S
+q1,0,q3,0,>
+q1,1,q3,1,>
+q1,_,qf,_,S
+q2,0,q4,0,>
+q2,1,q4,1,>
+q2,_,qf,_,S
+q3,0,q3,0,>
+q3,1,q3,1,>
+q3,_,q5,_,<
+q4,0,q4,0,>
+q4,1,q4,1,>
+q4,_,q6,_,<
+q5,0,q7,_,<
+q6,1,q7,_,<
+q7,0,q7,0,<
+q7,1,q7,1,<
+q7,_,q0,_,>

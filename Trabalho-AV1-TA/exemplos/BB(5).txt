@@ -1,0 +1,16 @@
+# Configuração inicial
+Fita:
+Estado_Inicial:qA
+Estado_Final:qH
+
+# Instrucoes
+qA,_,qB,1,>
+qA,1,qC,1,<
+qB,_,qC,1,>
+qB,1,qB,1,>
+qC,_,qD,1,>
+qC,1,qE,_,<
+qD,_,qA,1,<
+qD,1,qD,1,<
+qE,_,qH,1,>
+qE,1,qA,_,>

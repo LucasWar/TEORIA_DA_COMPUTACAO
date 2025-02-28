@@ -18,9 +18,10 @@ class MT: #AFD = (Q, Σ, δ, q0, F)
         while True:
             transition = self.q.transition(self.fita[self.current])
             if transition != None:
+                print(self.current)
                 qNext = transition.getState()
                 self.move_current(transition.getDirection(),transition.getWrite())
-                # print(f'{self.q.getName()} ({self.fita[self.current]}) -> {qNext.getName()}')
+                #print(f'{self.q.getName()} ({self.fita[self.current]}) -> {qNext.getName()}')
                 self.q = qNext
                 
             else:
